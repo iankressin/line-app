@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useAsync } from 'react-async';
 import { Button, Text } from 'native-base';
 
@@ -33,6 +33,20 @@ const PlaceQueue = ({ placeId }: { placeId: string | undefined }) => {
 
   const dequeue = async () => {
     const next: User = await QueueService.dequeue();
+
+    Alert.alert(
+      'Próximo',
+      `${next.firstName} ${next.lastName} \n ${next.email} \n ${next.document}`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ],
+      { cancelable: false },
+    );
 
     console.log(next);
   };

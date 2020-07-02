@@ -10,7 +10,6 @@ class PlaceService {
   };
 
   get = async (props: any): Promise<any> => {
-    console.log('Fetching data......');
     const place = await axios.get(`${this.BASE_URL}/place/${props.placeId}`);
     console.log(place.data);
 

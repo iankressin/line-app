@@ -1,6 +1,7 @@
 export interface User {
   firstName: string;
   lastName: string;
+  document?: string;
   age: number;
   email: string;
   isPlace: boolean;
