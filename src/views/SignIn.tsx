@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Form from '../components/Form';
 import { User } from '../interfaces/User';
-import AuthService from '../services/AuthService'
+import AuthService from '../services/AuthService';
 import UserContext from '../contexts/UserContext/UserContext';
 
 const fields = [
@@ -27,6 +28,10 @@ const SignIn = () => {
       const user: User = await AuthService.signIn(data.email, data.password);
 
       setUser(user, true);
+
+      const jsonUser = JSON.stringify(user);
+
+      await AsyncStorage.setItem('@lines_user', jsonUser);
     } catch (error) {
       console.log(error);
     }
