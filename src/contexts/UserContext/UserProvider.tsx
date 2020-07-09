@@ -24,6 +24,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.log('Got this data', data);
       if (data) {
         const userFromStorage = JSON.parse(data);
+
         updateUser({ isSignIn: true, user: userFromStorage, setUser });
       }
     });
