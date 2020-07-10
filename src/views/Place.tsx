@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components/native';
 import { View } from 'react-native';
 import { Button, Card, Text, Thumbnail } from 'native-base';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import NotificationService from '../services/NotificationService';
 import UserContext from '../contexts/UserContext/UserContext';
@@ -49,9 +50,9 @@ const QueueInfo = styled(View)`
   justify-content: center;
 `
 
-const PlaceDetail = ({ route }) => {
+const PlaceDetail = ({ route, navigation }) => {
   const [place, setPlace] = useState(route.params.place);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const enqueue = async () => {
     try {
@@ -63,7 +64,13 @@ const PlaceDetail = ({ route }) => {
 
       setPlace(updatedPlace);
     } catch (error) {
-      console.log(error);
+      if (error.response.status === 401) {
+        setUser({}, false);
+
+        await AsyncStorage.removeItem('@lines_user');
+
+        navigation.navigate('SignIn');
+      }
     }
   };
 
@@ -95,7 +102,5 @@ const PlaceDetail = ({ route }) => {
     </Container>
   );
 };
-
-
 
 export default PlaceDetail;
