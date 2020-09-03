@@ -1,10 +1,15 @@
 import { Card, View, Text, Thumbnail } from 'native-base';
 import styled from 'styled-components';
 
-export const Flex = styled(View)`
+export const FlexCenter = styled(View)`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const Flex = styled(View)`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const Container = styled(View)`
@@ -14,6 +19,12 @@ export const Container = styled(View)`
 export const RoundedCard = styled(Card)`
   border-radius: 5px;
   padding: 15px;
+`;
+
+export const Section = styled(View)`
+  margin-bottom: 10px;
+  border-bottom-color: #f0f0f0;
+  border-bottom-width: 1px;
 `;
 
 export const InfoContainer = styled(View)`

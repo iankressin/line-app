@@ -9,7 +9,7 @@ import UserContext from '../contexts/UserContext/UserContext';
 import { Place } from '../interfaces/Place';
 import QueueService from '../services/QueueService';
 import {
-  Flex,
+  FlexCenter,
   Title,
   Container,
   RoundedCard,
@@ -97,12 +97,12 @@ const PlaceDetail = ({ route, navigation }) => {
           </Button>
         </View>
 
-        <Flex style={{ marginTop: 20 }}>
+        <FlexCenter style={{ marginTop: 20 }}>
           <Text>Como está sendo sua experiência na fila?</Text>
           <Button transparent onPress={() => sendReview()}>
             <Text>Avalie!</Text>
           </Button>
-        </Flex>
+        </FlexCenter>
       </RoundedCard>
     </Container>
   );

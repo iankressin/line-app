@@ -16,6 +16,12 @@ const FooterMenu = () => {
 
         <Button
           vertical
+          onPress={() => navigate(isSignIn ? 'Services' : 'SignIn')}>
+          <Text>Serviços</Text>
+        </Button>
+
+        <Button
+          vertical
           onPress={() => navigate(isSignIn ? 'Queues' : 'SignIn')}>
           <Text>{user.isPlace ? 'Fila' : 'Filas'}</Text>
         </Button>
