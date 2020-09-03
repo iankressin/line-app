@@ -1,41 +1,21 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components/native';
 import { View } from 'react-native';
-import { Button, Card, Text, Thumbnail } from 'native-base';
+import { Button, Text, Toast } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import NotificationService from '../services/NotificationService';
 import UserContext from '../contexts/UserContext/UserContext';
 import { Place } from '../interfaces/Place';
 import QueueService from '../services/QueueService';
-
-const RoundedCard = styled(Card)`
-  border-radius: 5px;
-  padding: 15px;
-`;
-
-const InfoContainer = styled(View)`
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin-bottom: 10px;
-  border-bottom-color: #f0f0f0;
-  border-bottom-width: 1px;
-`;
-
-const RoundedThumbnail = styled(Thumbnail)`
-  border-radius: 5px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-`;
-
-const Container = styled(View)`
-  padding: 5px 10px;
-`;
-
-const Title = styled(Text)`
-  font-size: 17px;
-  margin-bottom: 5px;
-`
+import {
+  Flex,
+  Title,
+  Container,
+  RoundedCard,
+  InfoContainer,
+  RoundedThumbnail,
+} from '../components/Layout';
 
 const QueueInfo = styled(View)`
   border: 6px solid #cacdde;
@@ -48,7 +28,7 @@ const QueueInfo = styled(View)`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const PlaceDetail = ({ route, navigation }) => {
   const [place, setPlace] = useState(route.params.place);
@@ -62,6 +42,12 @@ const PlaceDetail = ({ route, navigation }) => {
 
       notification.registerActions();
 
+      Toast.show({
+        text: 'Você está na fila, espere ser chamado!',
+        buttonText: 'Ok',
+        type: 'success',
+      });
+
       setPlace(updatedPlace);
     } catch (error) {
       if (error.response.status === 401) {
@@ -70,9 +56,19 @@ const PlaceDetail = ({ route, navigation }) => {
         await AsyncStorage.removeItem('@lines_user');
 
         navigation.navigate('SignIn');
+      } else {
+        Toast.show({
+          text: error.response.data.message,
+          buttonText: 'Ok',
+          type: 'warning',
+        });
       }
     }
   };
+
+  const sendReview = () => {
+    navigation.navigate('Review', { place });
+  }
 
   return (
     <Container>
@@ -95,9 +91,18 @@ const PlaceDetail = ({ route, navigation }) => {
           <Text style={{ textAlign: 'center' }}>pessoas na fila</Text>
         </QueueInfo>
 
-        <Button full onPress={() => enqueue()}>
-          <Text>Entrar na fila</Text>
-        </Button>
+        <View>
+          <Button full onPress={() => enqueue()}>
+            <Text>Entrar na fila</Text>
+          </Button>
+        </View>
+
+        <Flex style={{ marginTop: 20 }}>
+          <Text>Como está sendo sua experiência na fila?</Text>
+          <Button transparent onPress={() => sendReview()}>
+            <Text>Avalie!</Text>
+          </Button>
+        </Flex>
       </RoundedCard>
     </Container>
   );

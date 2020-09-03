@@ -8,6 +8,7 @@ import Queues from '../views/Queues';
 import SignIn from '../views/SignIn';
 import SignUp from '../views/SignUp';
 import Profile from '../views/Profile';
+import Review from '../views/Review';
 
 import UserContext from '../contexts/UserContext/UserContext';
 import { navigationRef } from '../services/NavigationService';
@@ -29,6 +30,8 @@ const Navigation = () => {
             <Stack.Screen name="Profile" component={Profile} />
 
             <Stack.Screen name="Queues" component={Queues} />
+
+            <Stack.Screen name="Review" component={Review} />
           </>
         ) : (
           <>

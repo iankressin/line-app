@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button, Form, Item, Input, Label, Text } from 'native-base';
 
@@ -45,4 +45,3 @@ const styles = StyleSheet.create({
 });
 
 export default FormComponent;
-
